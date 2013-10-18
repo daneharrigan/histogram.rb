@@ -15,6 +15,9 @@ class Histogram
     else
       @bins << bin
       @bins.sort! { |a, b| a.point <=> b.point }
+
+      gap_idx = -1
+      gap_val
     end
   end
 
