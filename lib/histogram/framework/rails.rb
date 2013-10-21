@@ -3,7 +3,8 @@ module Histogram
     module Rails
       class ActionControllerSubscriber < ActiveSupport::LogSubscriber
         def process_action(e)
-          Histogram::DB.record(e.transaction_id) .controller = e
+          Histogram::DB.record(e.transaction_id).controller = e
+          Histogram::DB.compress(e.transaction_id)
         end
       end
 

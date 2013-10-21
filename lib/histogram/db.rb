@@ -1,16 +1,29 @@
+require "digest/md5"
+
 module Histogram
-  class DB
-    def self.record(id)
+  module DB
+    extend self
+
+    def record(id)
       return records[id] ||= Record.new
     end
 
-    def self.flush!
+    def flush!
+    end
+
+    def compress(id)
+      record = records.delete(id)
+      group = histograms[record.key]
+      # insert
+      # - controller
+      # - views
+      # - models
     end
 
     private
 
-    def self.records
-      @events ||= {}
+    def records
+      @records ||= {}
     end
 
     class Record
@@ -22,6 +35,9 @@ module Histogram
         @controller = nil
         @views = []
         @models = []
+      end
+
+      def key
       end
     end
   end
