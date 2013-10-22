@@ -1,5 +1,5 @@
 module Histogram
-  class Calculator
+  class Engine
     attr :bins
 
     def initialize(max)

@@ -1,5 +1,11 @@
 require "digest/md5"
 
+# Histogram::DB[String] = Request
+# Request#controller
+# Request#layout
+# Request#views
+# Request#models
+
 module Histogram
   module DB
     extend self
@@ -29,11 +35,11 @@ module Histogram
 
     class Record
       attr_accessor :controller
+      attr_accessor :layout
       attr_accessor :views
       attr_accessor :models
 
       def initialize
-        @controller = nil
         @views = []
         @models = []
       end

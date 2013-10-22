@@ -1,13 +1,10 @@
-$: << File.expand_path("../../lib", __FILE__)
-require "minitest/autorun"
-require "minitest/benchmark"
-require "histogram/calculator"
+require "test_helper"
 
-class Histogram::CalculatorBench < Minitest::Benchmark
+class Histogram::EngineBench < Minitest::Benchmark
   SIZE = 1000
 
   def setup
-    @histogram = Histogram::Calculator.new(SIZE)
+    @histogram = Histogram::Engine.new(SIZE)
   end
 
   def bench_insert
@@ -18,7 +15,7 @@ class Histogram::CalculatorBench < Minitest::Benchmark
 
   def bench_merge
     assert_performance_linear(0.000001) do |n|
-      @h2 = Histogram::Calculator.new(SIZE)
+      @h2 = Histogram::Engine.new(SIZE)
       n.times do |i|
         @histogram.insert(i)
         @h2.insert(i)

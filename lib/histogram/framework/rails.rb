@@ -10,7 +10,9 @@ module Histogram
 
       class ActionViewSubscriber < ActiveSupport::LogSubscriber
         def render_template(e)
-          Histogram::DB.record(e.transaction_id).views << e
+          record = Histogram::DB.record(e.transaction_id)
+          record.views << e
+          record.layout = e.payload[:layout]
         end
 
         def render_partial(e); end

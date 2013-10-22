@@ -1,10 +1,8 @@
-$: << File.expand_path("../../lib", __FILE__)
-require "minitest/autorun"
-require "histogram/calculator"
+require "test_helper"
 
-class Histogram::CalculatorTest < Minitest::Test
+class Histogram::EngineTest < Minitest::Test
   def test_10_points_in_5_bins
-    histogram = Histogram::Calculator.new(5)
+    histogram = Histogram::Engine.new(5)
     [23, 19, 10, 16, 36, 2, 9].each do |n|
       histogram.insert(n)
     end
@@ -28,7 +26,7 @@ class Histogram::CalculatorTest < Minitest::Test
   end
 
   def test_0_to_10_twice
-    histogram = Histogram::Calculator.new(10)
+    histogram = Histogram::Engine.new(10)
     10.times { |n| histogram.insert(n) }
     10.times { |n| histogram.insert(n) }
 
@@ -41,8 +39,8 @@ class Histogram::CalculatorTest < Minitest::Test
   end
 
   def test_merge_two_0_to_10_bins
-    h1 = Histogram::Calculator.new(10)
-    h2 = Histogram::Calculator.new(10)
+    h1 = Histogram::Engine.new(10)
+    h2 = Histogram::Engine.new(10)
 
     10.times do |n|
       h1.insert(n)
@@ -61,8 +59,8 @@ class Histogram::CalculatorTest < Minitest::Test
   end
 
   def test_merge_bins_0_to_10_and_5_to_10
-    h1 = Histogram::Calculator.new(10)
-    h2 = Histogram::Calculator.new(10)
+    h1 = Histogram::Engine.new(10)
+    h2 = Histogram::Engine.new(10)
 
     10.times { |n| h1.insert(n) }
     (5...10).to_a.each { |n| h2.insert(n) }
