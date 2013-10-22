@@ -13,7 +13,8 @@ module Histogram
 
     def compress(id)
       record = records.delete(id)
-      group = histograms[record.key]
+      record.key
+      #group = histograms[record.key]
       # insert
       # - controller
       # - views
@@ -38,6 +39,42 @@ module Histogram
       end
 
       def key
+        Digest::MD5.hexdigest([
+            controller(@controller),
+            @models.map { |e| model(e) },
+            @views.map { |e| view(e) }
+          ].flatten.sort.join(","))
+      end
+
+      private
+
+      def controller(e)
+        e.payload[:controller]+"#"+e.payload[:action]
+      end
+
+      def model(e)
+        suffix = e.payload[:sql][-12..-1].strip
+        s = e.payload[:name].split(" ")[0]
+        s << ".where(args)"
+        if suffix.include?("LIMIT 1")
+          if suffix[0..2] == "ASC"
+            s << ".first"
+          else 
+            s << ".last"
+          end
+        end
+
+        return s
+      end
+
+      def view(e)
+        [
+          "app/views/"+e.payload[:identifier].split("/app/views/")[1]
+        ] + e.children.map { |v| view(v) }.flatten
+      end
+
+      def children_keys(children)
+        []
       end
     end
   end
