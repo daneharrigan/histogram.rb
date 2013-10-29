@@ -10,4 +10,4 @@ Algorithm][1] paper.
 3. `sum`
 4. `uniform`
 
-1: http://jmlr.org/papers/volume11/ben-haim10a/ben-haim10a.pdf
+[1]: http://jmlr.org/papers/volume11/ben-haim10a/ben-haim10a.pdf
